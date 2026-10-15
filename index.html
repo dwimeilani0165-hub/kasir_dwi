@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasir✨ Space - Gen Z Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-layout">
+        <!-- Kolom Kiri: Katalog, Kategori, & Riwayat Tabel -->
+        <div class="left-pane">
+            <!-- Dashboard Statistik Status Pesanan -->
+            <div class="bento-card stats-card">
+                <div class="pane-header" style="margin-bottom: 10px;">
+                    <h2>📊 Statistik Pesanan</h2>
+                    <span class="badge-pill">Live Tracker</span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-label">👥 Total Pemesan</span>
+                        <span class="stat-value" id="statTotalOrder">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">⏳ Sedang Diproses</span>
+                        <span class="stat-value" id="statProses" style="color: #fbbf24;">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">✅ Selesai</span>
+                        <span class="stat-value" id="statSelesai" style="color: #34d399;">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Katalog Produk dengan Foto Menu & Tab Semua -->
+            <div class="bento-card">
+                <div class="pane-header">
+                    <h2>⚡ Pilih Menu</h2>
+                    <button class="btn-mini btn-mini-status" id="btnAddProductModal"
+                        style="padding: 6px 12px; font-size: 0.75rem;">+ Tambah Produk</button>
+                </div>
+
+                <!-- Tab Kategori (Termasuk "Semua") -->
+                <div class="category-tabs">
+                    <button class="tab-btn active" data-category="all">✨ Semua</button>
+                    <button class="tab-btn" data-category="Makanan">🍔 Makanan</button>
+                    <button class="tab-btn" data-category="Minuman">🥤 Minuman</button>
+                    <button class="tab-btn" data-category="Cemilan">🍟 Cemilan</button>
+                </div>
+
+                <div class="product-grid" id="productGrid">
+                    <!-- Produk dimuat via JS -->
+                </div>
+            </div>
+
+            <!-- Tabel Riwayat Pesanan -->
+            <div class="bento-card">
+                <div class="pane-header">
+                    <h2>📋 Riwayat Pesanan</h2>
+                    <button class="btn-mini btn-del" id="btnClearHistory"
+                        style="padding: 5px 10px; font-size: 0.7rem; background: rgba(239, 68, 68, 0.2); color: #f87171;">🗑️
+                        Hapus Semua</button>
+                </div>
+                <div class="table-container">
+                    <table class="genz-table">
+                        <thead>
+                            <tr>
+                                <th>Order & Pemesan</th>
+                                <th>Items</th>
+                                <th>Total Harga</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <tr>
+                                <td colspan="5" class="empty-table">Belum ada pesanan masuk bestie~</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kolom Kanan: Keranjang & Transaksi -->
+        <div class="right-pane">
+            <div class="bento-card cart-card">
+                <div class="pane-header">
+                    <h2>🛒 Keranjang</h2>
+                    <span class="badge-pill active-badge">Active Order</span>
+                </div>
+
+                <!-- Input Nama Pemesan -->
+                <div class="input-box">
+                    <label for="customerName">Nama Pemesan / Meja</label>
+                    <input type="text" id="customerName" placeholder="Cth: Jefri / Meja 05">
+                </div>
+
+                <!-- List Item Keranjang -->
+                <div class="cart-items-list" id="cartItems">
+                    <div class="empty-cart-state">
+                        <span>🛒</span>
+                        <p>Keranjang masih kosong nih,<br>yuk pilih menu dulu!</p>
+                    </div>
+                </div>
+
+                <!-- Ringkasan & Pembayaran -->
+                <div class="checkout-summary">
+                    <div class="sum-row">
+                        <span>Subtotal</span>
+                        <span id="subtotalPrice">Rp 0</span>
+                    </div>
+                    <div class="sum-row">
+                        <span>Diskon (%)</span>
+                        <input type="number" id="discountInput" min="0" max="100" value="0" placeholder="0">
+                    </div>
+                    <div class="sum-row total-highlight">
+                        <span>Total Akhir</span>
+                        <span id="totalPrice">Rp 0</span>
+                    </div>
+                    <div class="sum-row">
+                        <span>Uang Tunai (Rp)</span>
+                        <input type="number" id="cashAmount" placeholder="Nominal bayar">
+                    </div>
+                    <div class="sum-row change-highlight">
+                        <span>Kembalian</span>
+                        <span id="changeAmount">Rp 0</span>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="btnPay" class="btn btn-pay" disabled>🚀 Proses & Cetak</button>
+                    <button id="btnClear" class="btn btn-clear">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tambah / Edit Produk Baru -->
+    <div id="productModal" class="modal-backdrop">
+        <div class="receipt-card" style="font-family: 'Plus Jakarta Sans', sans-serif; width: 340px;">
+            <div class="pane-header" style="margin-bottom: 15px;">
+                <h3 id="modalProductTitle" style="color: #0f172a; font-size: 1.1rem;">✨ Tambah Menu Baru</h3>
+            </div>
+            <input type="hidden" id="editProductId">
+            <div class="input-box" style="margin-bottom: 10px;">
+                <label style="color: #475569;" for="newProdName">Nama Produk</label>
+                <input type="text" id="newProdName" placeholder="Cth: Es Kopi Susu"
+                    style="background: #f8fafc; color: #0f172a; border-color: #cbd5e1;">
+            </div>
+            <div class="input-box" style="margin-bottom: 10px;">
+                <label style="color: #475569;" for="newProdCategory">Kategori</label>
+                <select id="newProdCategory"
+                    style="width: 100%; padding: 8px 12px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; font-weight: 600; color: #0f172a; outline: none;">
+                    <option value="Makanan">Makanan</option>
+                    <option value="Minuman">Minuman</option>
+                    <option value="Cemilan">Cemilan</option>
+                </select>
+            </div>
+            <div class="input-box" style="margin-bottom: 10px;">
+                <label style="color: #475569;" for="newProdImage">URL Foto Menu</label>
+                <input type="text" id="newProdImage" placeholder="https://images.unsplash.com/..."
+                    style="background: #f8fafc; color: #0f172a; border-color: #cbd5e1;">
+            </div>
+            <div class="input-box" style="margin-bottom: 15px;">
+                <label style="color: #475569;" for="newProdPrice">Harga (Rp)</label>
+                <input type="number" id="newProdPrice" placeholder="Cth: 15000"
+                    style="background: #f8fafc; color: #0f172a; border-color: #cbd5e1;">
+            </div>
+            <div class="receipt-actions">
+                <button id="btnSaveProduct" class="btn btn-pay" style="padding: 10px;">Simpan</button>
+                <button id="btnCloseProductModal" class="btn btn-clear"
+                    style="padding: 10px; background: #fee2e2; color: #ef4444;">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Struk Belanja -->
+    <div id="receiptModal" class="modal-backdrop">
+        <div class="receipt-card">
+            <div class="receipt-header">
+                <h3>⚡ KASIR SPACE ⚡</h3>
+                <p>vibes & coffee bar</p>
+                <div class="divider-dashed"></div>
+                <p id="receiptDate"></p>
+                <p>Order ID: <span id="receiptId">#001</span></p>
+                <p><strong>Pemesan: <span id="receiptCustomer">-</span></strong></p>
+                <div class="divider-dashed"></div>
+            </div>
+            <div class="receipt-body" id="receiptBody">
+                <!-- Item struk -->
+            </div>
+            <div class="receipt-footer">
+                <div class="divider-dashed"></div>
+                <div class="r-row"><span>Subtotal</span> <span id="rSubtotal">Rp 0</span></div>
+                <div class="r-row"><span>Diskon</span> <span id="rDiscount">Rp 0</span></div>
+                <div class="r-row font-bold"><span>Total Akhir</span> <span id="rTotal">Rp 0</span></div>
+                <div class="r-row"><span>Tunai</span> <span id="rCash">Rp 0</span></div>
+                <div class="r-row"><span>Kembalian</span> <span id="rChange">Rp 0</span></div>
+                <div class="divider-dashed"></div>
+                <p class="receipt-note">✨ Thanks bestie, have a good day! ✨</p>
+            </div>
+            <div class="receipt-actions">
+                <button id="btnPrint" class="btn btn-pay" style="padding: 10px;">🖨️ Print Struk</button>
+                <button id="btnCloseModal" class="btn btn-clear" style="padding: 10px;">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

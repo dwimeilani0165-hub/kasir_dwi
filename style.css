@@ -1,0 +1,667 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background: #0f172a;
+    color: #f8fafc;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-layout {
+    max-width: 1350px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.8fr 1.2fr;
+    gap: 20px;
+}
+
+@media (max-width: 900px) {
+    .app-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.left-pane {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Bento Card Style Gen Z */
+.bento-card {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.3);
+}
+
+.pane-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.pane-header h2 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    letter-spacing: -0.3px;
+}
+
+/* Stats Card Total Pesanan */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.stat-box {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 10px;
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #94a3b8;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #38bdf8;
+}
+
+/* Kategori Tab */
+.category-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.tab-btn {
+    flex: 1;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #94a3b8;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    color: #f8fafc;
+    border-color: #818cf8;
+}
+
+.tab-btn.active {
+    background: #6366f1;
+    color: #ffffff;
+    border-color: #6366f1;
+}
+
+.badge-pill {
+    background: rgba(129, 140, 248, 0.15);
+    color: #818cf8;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.badge-pill.active-badge {
+    background: rgba(52, 211, 153, 0.15);
+    color: #34d399;
+}
+
+/* Katalog Grid dengan Foto Menu */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    max-height: 260px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.product-card {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover {
+    border-color: #818cf8;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2);
+}
+
+.product-image-container {
+    width: 100%;
+    height: 90px;
+    overflow: hidden;
+    background: #1e293b;
+    position: relative;
+}
+
+.product-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.product-card:hover .product-image-container img {
+    transform: scale(1.05);
+}
+
+.product-info {
+    cursor: pointer;
+    padding: 8px 10px;
+    flex-grow: 1;
+}
+
+.product-card h4 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-card small {
+    display: block;
+    font-size: 0.65rem;
+    color: #94a3b8;
+    margin-bottom: 2px;
+}
+
+.product-card p {
+    color: #a5b4fc;
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+/* Tombol Edit & Hapus di Card Produk */
+.product-actions-card {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    background: rgba(15, 23, 42, 0.8);
+}
+
+.btn-prod-action {
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 0.65rem;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.btn-edit {
+    color: #38bdf8;
+}
+
+.btn-edit:hover {
+    background: rgba(56, 189, 248, 0.2);
+}
+
+.btn-del {
+    color: #f87171;
+}
+
+.btn-del:hover {
+    background: rgba(248, 113, 113, 0.2);
+}
+
+/* Tabel Riwayat Pesanan Estetik */
+.table-container {
+    max-height: 220px;
+    overflow-y: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.genz-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    text-align: left;
+}
+
+.genz-table th {
+    background: rgba(15, 23, 42, 0.9);
+    color: #94a3b8;
+    padding: 10px 12px;
+    font-weight: 700;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.genz-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: #cbd5e1;
+    vertical-align: middle;
+}
+
+.genz-table tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.empty-table {
+    text-align: center;
+    color: #64748b;
+    font-style: italic;
+    padding: 20px !important;
+}
+
+/* Badge Status Tabel */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-badge.proses {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+}
+
+.status-badge.selesai {
+    background: rgba(52, 211, 153, 0.15);
+    color: #34d399;
+}
+
+/* Harga Coret Shopee Style di Tabel */
+.price-box-shopee {
+    display: flex;
+    flex-direction: column;
+}
+
+.shopee-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.shopee-badge {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    font-size: 0.6rem;
+    font-weight: 800;
+    padding: 1px 4px;
+    border-radius: 4px;
+}
+
+.shopee-strike {
+    text-decoration: line-through;
+    color: #64748b;
+    font-size: 0.7rem;
+}
+
+.shopee-final {
+    color: #f87171;
+    font-weight: 800;
+    font-size: 0.85rem;
+}
+
+.shopee-normal {
+    color: #f8fafc;
+    font-weight: 800;
+    font-size: 0.85rem;
+}
+
+/* Tombol Aksi Tabel */
+.btn-mini {
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: none;
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 4px;
+    transition: opacity 0.2s;
+}
+
+.btn-mini:hover {
+    opacity: 0.8;
+}
+
+.btn-mini-status {
+    background: #818cf8;
+    color: #fff;
+}
+
+.btn-mini-print {
+    background: #334155;
+    color: #f8fafc;
+}
+
+.btn-mini-delete {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+.btn-mini-delete:hover {
+    background: rgba(239, 68, 68, 0.4);
+}
+
+/* Input Keranjang & Form */
+.input-box {
+    margin-bottom: 12px;
+}
+
+.input-box label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.input-box input,
+.checkout-summary input {
+    width: 100%;
+    padding: 8px 12px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #f8fafc;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.input-box input:focus,
+.checkout-summary input:focus {
+    border-color: #818cf8;
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+}
+
+.cart-items-list {
+    max-height: 140px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+    padding-right: 4px;
+}
+
+.empty-cart-state {
+    text-align: center;
+    padding: 15px 0;
+    color: #64748b;
+}
+
+.empty-cart-state span {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.empty-cart-state p {
+    font-size: 0.75rem;
+}
+
+.cart-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.5);
+    padding: 8px 10px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.cart-item-info strong {
+    font-size: 0.8rem;
+    color: #f8fafc;
+    display: block;
+}
+
+.cart-item-info small {
+    font-size: 0.7rem;
+    color: #94a3b8;
+}
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.cart-item-controls button {
+    background: rgba(129, 140, 248, 0.2);
+    color: #a5b4fc;
+    border: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 0.75rem;
+}
+
+.cart-item-controls button:hover {
+    background: rgba(129, 140, 248, 0.4);
+}
+
+.btn-remove-item {
+    background: rgba(239, 68, 68, 0.2) !important;
+    color: #f87171 !important;
+}
+
+/* Ringkasan */
+.checkout-summary {
+    background: rgba(15, 23, 42, 0.5);
+    padding: 12px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.sum-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.sum-row input {
+    width: 70px;
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 0.8rem;
+}
+
+.total-highlight {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #f8fafc;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-top: 6px;
+    margin-top: 4px;
+}
+
+.change-highlight {
+    font-weight: 700;
+    color: #34d399;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.btn-pay {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+.btn-pay:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+}
+
+.btn-pay:disabled {
+    background: #334155;
+    color: #64748b;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.btn-clear {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+}
+
+.btn-clear:hover {
+    background: rgba(239, 68, 68, 0.25);
+}
+
+/* Modal Struk Estetik */
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+}
+
+.receipt-card {
+    background: #ffffff;
+    color: #0f172a;
+    padding: 24px;
+    width: 320px;
+    border-radius: 20px;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+}
+
+.receipt-header h3,
+.receipt-header p {
+    text-align: center;
+}
+
+.receipt-header h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.divider-dashed {
+    border-top: 1px dashed #94a3b8;
+    margin: 10px 0;
+}
+
+.receipt-body .r-item,
+.receipt-footer .r-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.receipt-note {
+    text-align: center;
+    font-size: 0.75rem;
+    margin-top: 8px;
+    color: #4f46e5;
+    font-weight: bold;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.receipt-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .modal-backdrop,
+    .receipt-card,
+    .receipt-card * {
+        visibility: visible;
+    }
+
+    .modal-backdrop {
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: none;
+        backdrop-filter: none;
+    }
+
+    .receipt-actions {
+        display: none;
+    }
+}
